@@ -1,0 +1,38 @@
+using System;
+using System.Net.Sockets;
+using System.Text;
+
+namespace SocketClient
+{
+    class Program
+    {
+
+            const int PORT_NO = 5000;           //enter the scale IP port number
+        const string SERVER_IP = "https://protect-za.mimecast.com/s/ywwHC66xoltm2MgFppTSq?domain=127.0.0.1";   //enter the scale IP address
+            static void Main(string[] args)
+            {
+            //---data to send to the server---
+
+            //---create a TCPClient object at the IP and port no.---
+            TcpClient client = new TcpClient(SERVER_IP, PORT_NO);
+            NetworkStream nwStream = client.GetStream();
+
+            byte[] ENQByteToSend = new byte[1];
+            ENQByteToSend[0] = 5; //put an ENQ (char(5)) into the byte array
+
+            //---send the ENQ---
+
+            Console.WriteLine("Sending : " + ENQByteToSend[0]);
+
+            nwStream.Write(ENQByteToSend, 0, ENQByteToSend.Length);
+
+            //---read back the text--- //this could be the weight data
+            byte[] bytesToRead = new byte[client.ReceiveBufferSize];
+                int bytesRead = https://protect-za.mimecast.com/s/6rOrC76y8mtN5y0uWaVlL?domain=nwstream.read(bytesToRead, 0, client.ReceiveBufferSize);
+                Console.WriteLine("Received : " + Encoding.ASCII.GetString(bytesToRead, 0, bytesRead));
+                Console.ReadLine();
+                client.Close();
+            }
+    
+    }
+}
